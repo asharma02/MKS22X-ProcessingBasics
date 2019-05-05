@@ -32,7 +32,7 @@ class Visualizer {
       speeds[i] = random(2);
     }
   }
-  
+
 
   void display() {
     //draw the bars equally spaced inside this box. 
@@ -59,31 +59,38 @@ class Visualizer {
     //rect(x+120, y+50, 60, 50);
     float wb = 400/z; //400/10 bars, 40 per bar
     for (int i = 0; i < values.length; i++) {
-      if (values[i] < 0) { //if less than 0
-        fill(0, 255, 0); //fill with red
-        rect(x+(i*wb), y+100, wb, values[i]); //redctangles starting at x+ which rec,midline, with dimensions of 40 and the value
-      } else {
-        fill(255, 0, 0); //fill with green
-        rect(x+(i*wb), y+100, wb, values[i]); 
+      if (values[i] > 50) { //change colors based on placement
+        fill(0, 255, 0);
       } 
-    }
-
-
-    //Width of the visualizer is 400!
-  }
-  
-  void update() {
-    //???WRITE THIS METHOD SECOND!!!
-    for (int i = 0; i < values.length; i++) {
-      values[i] += speeds[i]; //the speed updates the values. Do not touch this.
-      if (values[i] > 99 || values[i] < -99) { //if goes out of bounds
-        values[i] -= speeds[i]; //negate
-        speeds[i] = -speeds[i];
+      else if (values[i] > 0) {
+        fill(255, 255, 0);
+      } 
+      else if (values[i] > -50) {
+        fill(255, 130, 0);
+      } 
+      else {
+        fill(255, 0, 0); //red at end
       }
-      //??? keep them values between max/min value so they stay in the box.
-      //??? reverse the speeds so the bar oscillates up/down when it reaches max/min
+      rect(x+(i*wb), y+100, wb, values[i] * -1);
     }
+ 
+
+
+  //Width of the visualizer is 400!
+}
+
+void update() {
+  //???WRITE THIS METHOD SECOND!!!
+  for (int i = 0; i < values.length; i++) {
+    values[i] += speeds[i]; //the speed updates the values. Do not touch this.
+    if (values[i] > 99 || values[i] < -99) { //if goes out of bounds
+      values[i] -= speeds[i]; //negate
+      speeds[i] = -speeds[i];
+    }
+    //??? keep them values between max/min value so they stay in the box.
+    //??? reverse the speeds so the bar oscillates up/down when it reaches max/min
   }
+}
 }
 
 void setup() {
